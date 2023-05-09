@@ -1,5 +1,5 @@
 import { ProjectList, TaskList } from "~/_type/type"
-import { sortTask, sortTaskInProject } from "./sort"
+import { getTaskForShow } from "./parse"
 
 const task: TaskList = [
     {
@@ -11,7 +11,7 @@ const task: TaskList = [
         personalPriority: 5.5,
         status: 'not started',
         about: undefined,
-        projectId: 'project',
+        projectId: '202305081',
         totalPriority: 15.5,
     },
     {
@@ -23,7 +23,7 @@ const task: TaskList = [
         personalPriority: 3,
         status: 'not started',
         about: undefined,
-        projectId: 'project',
+        projectId: '202305083',
         totalPriority: 13.5,
     },
     {
@@ -35,7 +35,7 @@ const task: TaskList = [
         personalPriority: 3,
         status: 'not started',
         about: undefined,
-        projectId: 'project',
+        projectId: '202305085',
         totalPriority: 13.5,
     },
     {
@@ -47,7 +47,7 @@ const task: TaskList = [
         personalPriority: 10,
         status: 'not started',
         about: undefined,
-        projectId: 'project',
+        projectId: '202305083',
         totalPriority: 12,
     },
 ]
@@ -65,7 +65,7 @@ const project: ProjectList = [
     },
     {
         name: 'プロジェクト2-1',
-        id: '202305081',
+        id: '202305082',
         timestamp: 1000013,
         importance: 3,
         urgency: 1,
@@ -75,7 +75,7 @@ const project: ProjectList = [
     },
     {
         name: 'プロジェクト2-2',
-        id: '202305081',
+        id: '202305083',
         timestamp: 1000003,
         importance: 3,
         urgency: 1,
@@ -85,7 +85,7 @@ const project: ProjectList = [
     },
     {
         name: 'プロジェクト3',
-        id: '202305081',
+        id: '202305084',
         timestamp: 1000003,
         importance: 5,
         urgency: 2,
@@ -95,11 +95,11 @@ const project: ProjectList = [
     },
 ]
 
-const sortTest = (list: TaskList) => {
-    const data = sortTask(list).map(l => l.name)
-    console.log(data)
+const getName = () => {
+    const list = getTaskForShow(task)(project)
+    console.log(list.map(value => [value.name, value.projectName]))
 }
 
-test('sort', () => {
-    sortTest(task)
+test('getname', () => {
+    getName()
 })

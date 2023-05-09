@@ -19,11 +19,6 @@ export type TaskDetail = Detail & {
     totalPriority: TotalPriority,
 }
 export type TaskList = Array<TaskDetail>
-export type ViewTask = TaskDetail & {
-    projectName: string,
-}
 
-export type ProjectDetail = Detail & {
-    tasks: TaskList,
-}
+export type ProjectDetail = Detail
 export type ProjectList = Array<ProjectDetail>
