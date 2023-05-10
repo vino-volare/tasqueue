@@ -1,6 +1,6 @@
 import { ProjectList, TaskList } from "~/_type/type"
 
-export type SortTask = (list: TaskList) => TaskList
+type SortTask = (list: TaskList) => TaskList
 export const sortTask: SortTask = (list) => list.sort((a, b) => {
     if (a.totalPriority != b.totalPriority) {
         return b.totalPriority - a.totalPriority
@@ -9,7 +9,7 @@ export const sortTask: SortTask = (list) => list.sort((a, b) => {
     }
 })
 
-export type SortProject = (list: ProjectList) => ProjectList
+type SortProject = (list: ProjectList) => ProjectList
 export const sortProject: SortProject = (list) => list.sort((a, b) => {
     if (a.personalPriority != b.personalPriority) {
         return b.personalPriority - a.personalPriority

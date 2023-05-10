@@ -11,14 +11,15 @@ type Detail = {
     urgency: PersonalLevel,
     personalPriority: PriorityLevel,
     status: Status,
-    about: string | undefined,
+    about?: string,
 }
 
 export type TaskDetail = Detail & {
     projectId: string,
     totalPriority: TotalPriority,
+    projectName?: string,
 }
-export type TaskList = Array<TaskDetail>
+export type TaskList = TaskDetail[]
 
 export type ProjectDetail = Detail
-export type ProjectList = Array<ProjectDetail>
+export type ProjectList = ProjectDetail[]

@@ -1,8 +1,4 @@
-import { ProjectList, TaskDetail, TaskList } from "~/_type/type";
-
-export type TaskForShow = TaskDetail & {
-    projectName: string,
-}
+import { ProjectList, TaskList } from "~/_type/type";
 
 type GetProjectName = (list: ProjectList) => (id: string) => string
 const getProjectName: GetProjectName = (list) => (id) => {
@@ -14,5 +10,11 @@ const getProjectName: GetProjectName = (list) => (id) => {
     }
 }
 
-export type MargeProjectName = (taskList: TaskList) => (projectList: ProjectList) => TaskForShow[]
-export const getTaskForShow: MargeProjectName = (taskList) => (projectList) => taskList.map(task => Object.assign(task, {projectName: getProjectName(projectList)(task.projectId)}) as TaskForShow)
+type MargeProjectName = (taskList: TaskList) => (projectList: ProjectList) => TaskList
+export const margeProjectName: MargeProjectName = (taskList) => (projectList) => taskList.map(task => Object.assign(task, {projectName: getProjectName(projectList)(task.projectId)}))
+
+type ReduceProjectName = (taskList: TaskList) => TaskList
+export const reduceProjectName: ReduceProjectName = (taskList) => taskList.map(task => {
+    delete task.projectName
+    return task
+})
