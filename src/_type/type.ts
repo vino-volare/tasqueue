@@ -17,8 +17,28 @@ export type ProjectDetail = {
 export type TaskDetail = ProjectDetail & {
     projectId: string,
     totalPriority: TotalPriority,
-    projectName?: string,
+    projectName: string,
 }
 export type TaskList = TaskDetail[]
 
 export type ProjectList = ProjectDetail[]
+
+export type NewProject = {
+    name: string,
+    importance: PersonalLevel,
+    urgency: PersonalLevel,
+    status: Status,
+    about?: string,
+}
+
+export type NewTask = NewProject & {
+    projectId: string,
+    projectName: string,
+    projectPriority: PriorityLevel
+}
+
+
+export type ErrorState = {
+    status: boolean,
+    string: string
+}
