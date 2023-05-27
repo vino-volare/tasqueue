@@ -1,4 +1,4 @@
-import { NewProject, NewTask, ProjectDetail, TaskDetail } from "~/_type/type";
+import { NewProject, NewTask, ProjectDetail, TaskDetail, TaskList } from "~/_type/type";
 import { calcPriority, sumPriority } from "../calculation/calculation";
 
 type ParseNewTask = (input: NewTask) => TaskDetail
@@ -38,3 +38,6 @@ export const parseNewProject: ParseNewProject = (input) => {
     }
     return parsed
 }
+
+type ExtractTasksById = (list: TaskList, id: string) => TaskList
+export const extractTasksById: ExtractTasksById = (list, id) => list.filter(data => data.projectId === id)
