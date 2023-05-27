@@ -1,4 +1,5 @@
-import { ProjectList, TaskList } from "~/_type/type"
+import { ProjectDetail, ProjectList, TaskDetail, TaskList } from "~/_type/type"
+import { getListOrder } from "../calculation/calculation"
 
 type SortTask = (list: TaskList) => TaskList
 export const sortTask: SortTask = (list) => list.sort((a, b) => {
@@ -25,3 +26,13 @@ export const sortTaskInProject: SortTask = (list) => list.sort((a, b) => {
         return a.timestamp - b.timestamp
     }
 })
+
+export const insertData = <T>(list: T[], data: T, order: number) => {
+    list.splice(order, 0, data)
+    return list
+}
+
+export const popData = <T>(list: T[], order: number) => {
+    delete list[order]
+    return list
+}

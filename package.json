@@ -28,6 +28,7 @@
     "vitest": "^0.26.3"
   },
   "dependencies": {
-    "dexie": "^3.2.3"
+    "dexie": "^3.2.3",
+    "just-compare": "^2.3.0"
   }
 }

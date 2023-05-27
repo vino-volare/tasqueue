@@ -36,9 +36,3 @@ export type NewTask = NewProject & {
     projectName: string,
     projectPriority: PriorityLevel
 }
-
-
-export type ErrorState = {
-    status: boolean,
-    string: string
-}
