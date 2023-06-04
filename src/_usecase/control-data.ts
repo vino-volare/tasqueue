@@ -15,6 +15,7 @@ export const setData: SetData = async(newData, index) => {
         setTasks(l => insertData(l, newData, order))
         
         const {data, error} = await putDataToDB(newData)
+        if (data !== undefined && !data.length) return
         if (data !== undefined && isTaskList(data) && compare(getTasks, sortTask(data))) return
 
         setErrorFlag('dataMismatchError', true)
@@ -28,6 +29,7 @@ export const setData: SetData = async(newData, index) => {
         setProjects(l => insertData(l, newData, order))
     
         const {data, error} = await putDataToDB(newData)
+        if (data !== undefined && !data.length) return
         if (data !== undefined && !isTaskList(data) && compare(getTasks, sortProject(data))) return
     
         setErrorFlag('dataMismatchError', true)
@@ -45,6 +47,7 @@ export const deleteData: DeleteData = async(delData, index) => {
     if (isTask(delData)) {
         setTasks(l => popData(l, index))
         const {data, error} = await deleteDataFromDB(delData)
+        if (data !== undefined && !data.length) return
         if (data !== undefined && isTaskList(data) && compare(getTasks, sortTask(data))) return
 
         setErrorFlag('dataMismatchError', true)
@@ -57,6 +60,7 @@ export const deleteData: DeleteData = async(delData, index) => {
     }
     setProjects(l => popData(l, index))
     const {data, error} = await deleteDataFromDB(delData)
+    if (data !== undefined && !data.length) return
     if (data !== undefined && !isTaskList(data) && compare(getProjects, sortProject(data))) return
 
     setErrorFlag('dataMismatchError', true)

@@ -1,38 +1,23 @@
-import { ProjectDetail, ProjectList, TaskDetail, TaskList } from "~/_type/type"
-import { getListOrder } from "../calculation/calculation"
+import { Detail, ProjectDetail, TaskDetail } from "~/_type/type"
+import { calcPriority, priorityTaskAndProj } from "../calculation/calculation"
+import { searchProject } from "~/search/search"
 
-type SortTask = (list: TaskList) => TaskList
-export const sortTask: SortTask = (list) => list.sort((a, b) => {
-    if (a.totalPriority != b.totalPriority) {
-        return b.totalPriority - a.totalPriority
-    } else {
-        return a.timestamp - b.timestamp
-    }
-})
-
-type SortProject = (list: ProjectList) => ProjectList
-export const sortProject: SortProject = (list) => list.sort((a, b) => {
-    if (a.personalPriority != b.personalPriority) {
-        return b.personalPriority - a.personalPriority
-    } else {
-        return a.timestamp - b.timestamp
-    }
-})
-
-export const sortTaskInProject: SortTask = (list) => list.sort((a, b) => {
-    if (a.personalPriority != b.personalPriority) {
-        return b.personalPriority - a.personalPriority
-    } else {
-        return a.timestamp - b.timestamp
-    }
-})
-
-export const insertData = <T>(list: T[], data: T, order: number) => {
-    list.splice(order, 0, data)
-    return list
+export const sortTaskByTotal = (taskList :TaskDetail[], projectList: ProjectDetail[]):TaskDetail[] => {
+    if (!taskList.length) return []
+    return taskList.sort((a, b) => {
+        const dataA = priorityTaskAndProj(a, searchProject(a.projectId, projectList))
+        const dataB = priorityTaskAndProj(b, searchProject(b.projectId, projectList))
+        if (dataA.totalPriority === dataB.totalPriority) return a.timestamp - b.timestamp
+        return dataB.totalPriority - dataA.totalPriority
+    })
 }
 
-export const popData = <T>(list: T[], order: number) => {
-    delete list[order]
-    return list
+export const sortData = <T extends TaskDetail | ProjectDetail>(list: Detail<T>[]): Detail<T>[] => {
+    if (!list.length) return []
+    return list.sort((a, b) => {
+        const priorityA = calcPriority(a.importance, a.urgency)
+        const priorityB = calcPriority(b.importance, b.urgency)
+        if (priorityA === priorityB) return a.timestamp - b.timestamp
+        return priorityB - priorityA
+    })
 }

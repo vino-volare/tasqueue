@@ -20,3 +20,7 @@ const setErrorFlag:SetErrorFlag = (errorName, flag) => {
 }
 
 export {errorFlag, setErrorFlag}
+
+type FormError = {status: boolean, string: string}
+const form: FormError = {status: false, string: 'プロジェクトを選択してください'}
+export const [formError, setFormError] = createStore(form)

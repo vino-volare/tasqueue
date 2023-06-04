@@ -1,8 +1,14 @@
-import { TaskDetail, TaskList } from "~/_type/type"
+import { ProjectDetail, TaskDetail } from "~/_type/type"
 
-export const isTask = (data: any): data is TaskDetail => {
-    return data.projectId !== undefined
+export const isTask = (data: TaskDetail | ProjectDetail): data is TaskDetail => {
+    return Object.keys(data).includes('projectId')
 }
-export const isTaskList = (data: any): data is TaskList => {
-    return Array.isArray(data) && (Boolean(data.length) || data[0].projectId !== undefined)
+export const isProject = (data: TaskDetail | ProjectDetail): data is ProjectDetail => {
+    return !isTask(data)
+}
+export const isTaskList = (data: TaskDetail[] | ProjectDetail[]): data is TaskDetail[] => {
+    return isTask(data[0])
+}
+export const isProjectList = (data: TaskDetail[] | ProjectDetail[]): data is ProjectDetail[] => {
+    return !isTaskList(data)
 }

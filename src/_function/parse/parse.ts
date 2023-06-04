@@ -1,10 +1,6 @@
-import { NewProject, NewTask, ProjectDetail, TaskDetail, TaskList } from "~/_type/type";
-import { calcPriority, sumPriority } from "../calculation/calculation";
+import { ProjectDetail, ProjectField, TaskDetail, TaskField } from "~/_type/type";
 
-type ParseNewTask = (input: NewTask) => TaskDetail
-
-export const parseNewTask: ParseNewTask = (input) => {
-    const calculatedPriority = calcPriority(input.importance)(input.urgency)
+export const parseNewTask = (input: TaskField): TaskDetail => {
     const timestamp = Date.now()
     const parsed: TaskDetail = {
         name: input.name,
@@ -12,19 +8,14 @@ export const parseNewTask: ParseNewTask = (input) => {
         timestamp: timestamp,
         importance: input.importance,
         urgency: input.urgency,
-        personalPriority: calculatedPriority,
-        totalPriority: sumPriority(input.projectPriority)(calculatedPriority),
         status: input.status,
         about: input.about,
-        projectId: input.projectId,
-        projectName: input.projectName
+        projectId: input.projectId
     }
     return parsed
 }
 
-type ParseNewProject = (input: NewProject) => ProjectDetail
-
-export const parseNewProject: ParseNewProject = (input) => {
+export const parseNewProject= (input: ProjectField): ProjectDetail => {
     const timestamp = Date.now()
     const parsed: ProjectDetail = {
         name: input.name,
@@ -32,12 +23,14 @@ export const parseNewProject: ParseNewProject = (input) => {
         timestamp: timestamp,
         importance: input.importance,
         urgency: input.urgency,
-        personalPriority: calcPriority(input.importance)(input.urgency),
         status: input.status,
         about: input.about
     }
     return parsed
 }
 
-type ExtractTasksById = (list: TaskList, id: string) => TaskList
-export const extractTasksById: ExtractTasksById = (list, id) => list.filter(data => data.projectId === id)
+type ExtractTasksById = (list: TaskDetail[], project: ProjectDetail) => TaskDetail[]
+export const extractTasksById: ExtractTasksById = (list, project) => {
+    if (!list.length) return []
+    return list.filter(data => data.projectId === project.id)
+}

@@ -1,9 +1,9 @@
 import { createStore } from "solid-js/store";
-import { ProjectList, TaskList } from "~/_type/type";
+import { ProjectDetail, ProjectList, TaskDetail, TaskList } from "~/_type/type";
 
 
-const initialTask: TaskList = []
+const initialTask: TaskDetail[] = []
 export const [getTasks, setTasks] = createStore(initialTask)
 
-const initialProject: ProjectList = []
+const initialProject: ProjectDetail[] = []
 export const [getProjects, setProjects] = createStore(initialProject)
